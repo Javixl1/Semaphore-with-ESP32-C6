@@ -3,8 +3,8 @@
 #include <Preferences.h>
 
 // Output pins
-const int LightGreen  = 17;
-const int LightYellow = 20;
+const int LightGreen  = 20;
+const int LightYellow = 17;
 const int LightRed    = 19;
 const int LightWhite  = 18;
 const int analogPin   = A0;
@@ -127,6 +127,9 @@ void handleWiFi() {
 void handleResetWiFi() {
   prefs.remove("ssid");
   prefs.remove("pass");
+  while (!Serial); // Espera a que el puerto esté listo (especialmente útil en USB CDC)
+  Serial.println("Serial working");
+
   Serial.println("Wi-Fi credentials deleted.");
   server.send(200, "text/html", "<h1>Wi-Fi credentials deleted</h1><p>Restart the device to reconfigure.</p>");
 }
